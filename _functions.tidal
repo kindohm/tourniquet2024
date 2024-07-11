@@ -1,0 +1,36 @@
+let
+  shiftBy num x = (num ~>) $ x
+  shift x = shiftBy 1 $ x
+  tempoToCps ttt = ((range 10 522 $ ttt)/240)
+  sendTempo ttt = ccn 100 # ccv (quantise 1 (range 0 127 $ ttt)) # s "harmor" # midichan 15
+  modT prob min max x = someCyclesBy prob (|*| (segment 1 $ range min max $ shiftBy 13 $ rand)) $ shift $ x
+  modTime = modT
+  cpsWTF x = cps (tempoToCps x)
+  iter8Prob prob x = someCyclesBy prob (iter 8) $ shift $ x
+  revProb prob x = someCyclesBy prob (rev) $ shift $ x
+  gtfo x = (const $ s "~") $ x
+  g = gtfo
+  gtfoProb prob x = someCyclesBy prob gtfo $ shift $ x
+  roll prob x = sometimesBy prob (off "3e" id) $ x
+  roll2 prob x = sometimesBy prob (off "3s" id) $ x
+  replicator text1 = [putStr (text1) | x <- replicate 500 text1]
+  flood text2 = sequence_(replicator text2)
+
+do
+  let ttt = modTime 0.6 0.2 4 $ modTime 0.5 0.3 3 $ (range 0.1 1 $ cF 1 "18") -- "0.4"
+  d1  
+    $ stack [
+      s "syntakt" # midichan 0 # note "c5" # amp 1
+      , struct "1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1" $ s "syntakt" # midichan 11 # note "c5" # amp 1
+      , s "harmor" # midichan 2 # note "c5" # amp 0.8
+      , sendTempo ttt
+    ] 
+    # cpsWTF ttt
+
+    -- # cps 0.255
+  d2
+    $ ccn 100 # ccv 13 # s "harmor" # midichan 15
+
+    hush
+
+flood "hello "
