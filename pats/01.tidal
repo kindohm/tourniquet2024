@@ -3,19 +3,22 @@ let g = (const $ s "~")
 do
   let pat = "{ 0@4 1 1@2 1@2 1@2 1@2 1@2 1@2 1@2  1 1 1 1 1 1 1 1 }%16"
   d1
-    $ every 3 rev
-    $ every 4 (iter 8)
+    $ someCyclesBy 0.5 rev
+    $ (1 ~>)
+    $ someCyclesBy 0.5 (iter 8)
     $ stack [
       struct pat $ s "rytm" # midichan 2 # note "c3" # amp 1
-      , struct (binaryN 8 "<82394 348059 1234783 4395233>") $ s "rytm" # midichan 8 # note "c3" # amp 1
+      , sometimesBy 0.05 (# midichan 9)
+        $ struct pat $ s "rytm" # midichan 8 # note "c3" # amp 1
       , struct (inv pat) $ s "rytm" # midichan 3 # note "c3" # amp 1
       , struct pat $ s "harmor" # midichan 0 # note "c5" # amp 1
       , struct (inv pat) $ s "harmor" # midichan 0 # note "c5" # amp 0.1
       , struct pat $ s "harmor2" # midichan 0 # note "c5" # amp 0.1
       , struct (inv pat) $ s "harmor2" # midichan 0 # note "c5" # amp 1
-    ] # cps (180/120/2)
+    ] # cps (200/120/2)
 
 
+hush
 
 
 d1 $ s "bah*16?" # cut "1" # release 0.02 # begin (range 0 0.8 $ rand) # speed (range 0.5 8 $ (3 ~>) $ rand)

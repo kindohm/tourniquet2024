@@ -89,7 +89,7 @@ s.waitForBoot {
 
 
 
-	// var addr = NetAddr.new("10.0.0.244", 5150);
+/*	// var addr = NetAddr.new("10.0.0.244", 5150);
 	"setting up OSC forwarding to 5150".postln;
 	~addr = NetAddr.new("127.0.0.1", 5150);
 	OSCFunc({ |msg, time, tidalAddr|
@@ -97,7 +97,7 @@ s.waitForBoot {
 		msg = msg ++ ["time", time, "latency", latency];
 		// msg.postln;
 		~addr.sendBundle(latency, msg);
-	}, '/dirt/play').fix;
+	}, '/dirt/play').fix;*/
 
 };
 s.latency = 0;

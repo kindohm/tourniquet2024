@@ -3,13 +3,12 @@
 do
   d1
     $ (100 ~>)
-    $ someCyclesBy 0 (plyWith "<5 10 15 25 20>" (# amp 0.5))
-    $ (|* cps (segment 1 $ range 0.5 1 $ (12 ~>) $ rand))
+    $ someCyclesBy 0 (plyWith "<5 10 15 25 20>" (# amp 0.2))
+    $ (|* cps (segment 1 $ range 0.25 2 $ (12 ~>) $ rand))
     $ stack [
-      slow 1.666 $ midichan 4 # note "c3" # amp 1 # s "rytm"
-      , midichan "<2 3>" # s "rytm" # note "c3" # amp 1
-      , amp "<1 0.1>" # s "harmor" # midichan 1 # note "c5"
-      , amp "<0.1 1>" # s "harmor2" # midichan 1 # note "c5"
+      midichan "<2 3>" # s "rytm" # note "c3" # amp 1
+      , g $ amp "<1 0.1>" # s "harmor" # midichan 1 # note "c5"
+      , g $ amp "<0.1 1>" # s "harmor2" # midichan 1 # note "c5"
     ] # cps 0.5
 
 hush
